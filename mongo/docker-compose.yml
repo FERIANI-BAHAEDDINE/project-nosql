@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=app
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - elastic  # Connect MongoDB to the 'elastic' network, which exists externally
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  elastic:
+    external: true  # Use the existing 'elastic' network
